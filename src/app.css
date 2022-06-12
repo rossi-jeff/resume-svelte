@@ -1,0 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+#print-container {
+	border: solid black 1px;
+	margin: 1em 0 1em 0;
+	padding: 2em;
+}
+
+#print-container hr {
+	border-top: solid black 1px;
+}
