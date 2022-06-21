@@ -1,8 +1,9 @@
 <script>
-	import { contentUrl, ContentUUID, breadcrumbs } from '../lib';
+	import { contentUrl, ContentUUID, breadcrumbs, graphQLClient } from '../lib';
 	import { onMount } from 'svelte';
 	import { ContentRender } from '../components';
 	import { CardTestimonial } from '../components/cards';
+	import { GET_COMMENTS_QUERY } from '../graphql/queries';
 
 	/**
 	 * @type {any[]}
@@ -25,12 +26,9 @@
 				rows = data;
 			})
 			.catch((e) => console.log(e));
-		fetch('/testimonials.json')
-			.then((results) => results.json())
-			.then((data) => {
-				testimonials = data;
-			})
-			.catch((e) => console.log(e));
+		graphQLClient.request(GET_COMMENTS_QUERY).then(result => {
+			if (result.getComments) testimonials = result.getComments
+		}).catch(error => console.log(error));
 	});
 </script>
 

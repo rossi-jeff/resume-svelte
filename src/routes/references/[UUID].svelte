@@ -1,17 +1,50 @@
 <script>
-	export /**
-	 * @type {any}
-	 */
-	let reference;
-	import { FormatAddress, FormatName, breadcrumbs } from '../../lib';
+	/**
+* @type {{ Name: { Salutation: any; First: any; Middle: any; Last: any; Suffix: string; }; Company: any; Title: any; Address: { Address: string; Suite: any; City: any; State: any; Zip: any; }; Emails: string | any[]; Phones: string | any[]; Comments: string | any[]; }}
+*/
+	let reference = {
+		Name: {
+			Salutation: undefined,
+			First: undefined,
+			Middle: undefined,
+			Last: undefined,
+			Suffix: ''
+		},
+		Company: undefined,
+		Title: undefined,
+		Address: {
+			Address: '',
+			Suite: undefined,
+			City: undefined,
+			State: undefined,
+			Zip: undefined
+		},
+		Emails: '',
+		Phones: '',
+		Comments: ''
+	};
+	import { FormatAddress, FormatName, breadcrumbs, graphQLClient } from '../../lib';
+	import { SHOW_REFERENCE_QUERY } from '../../graphql/queries';
+	import { onMount } from 'svelte';
+	import { page } from '$app/stores';
 
 	/** @type {{ text: string; href?: string; }[]} */
 	let trail = [
 		{ text: 'Home', href: '/' },
-		{ text: 'References', href: '/references' },
-		{ text: FormatName(reference.Name) }
+		{ text: 'References', href: '/references' }
 	];
 	breadcrumbs.set(trail);
+
+	onMount(() => {
+		const { UUID } = $page.params
+		graphQLClient.request(SHOW_REFERENCE_QUERY, { UUID }).then(result => {
+			if (result.showReference) reference = result.showReference
+			if (reference.Name && trail.length === 2) {
+				trail.push({ text: FormatName(reference.Name) });
+				breadcrumbs.set(trail);
+			}
+		}).catch(error => console.log(error));
+	});
 </script>
 
 <div class="card-normal shadow">

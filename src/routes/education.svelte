@@ -1,8 +1,9 @@
 <script>
-	import { contentUrl, ContentUUID, breadcrumbs } from '../lib';
+	import { contentUrl, ContentUUID, breadcrumbs, graphQLClient } from '../lib';
 	import { onMount } from 'svelte';
 	import { ContentRender } from '../components';
 	import { CardSchool } from '../components/cards';
+	import { GET_SCHOOLS_QUERY } from '../graphql/queries';
 
 	/**
 	 * @type {any[]}
@@ -25,12 +26,11 @@
 				rows = data;
 			})
 			.catch((e) => console.log(e));
-		fetch('/education.json')
-			.then((results) => results.json())
-			.then((data) => {
-				schools = data;
-			})
-			.catch((e) => console.log(e));
+		graphQLClient.request(GET_SCHOOLS_QUERY).then(result => {
+			if (result.getSchools) schools = result.getSchools
+		}).catch(error => {
+			console.log(error);
+		})
 	});
 </script>
 

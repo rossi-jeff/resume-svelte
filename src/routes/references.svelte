@@ -1,8 +1,9 @@
 <script>
-	import { contentUrl, ContentUUID, breadcrumbs } from '../lib';
+	import { contentUrl, ContentUUID, breadcrumbs, graphQLClient } from '../lib';
 	import { onMount } from 'svelte';
 	import { ContentRender } from '../components';
 	import { CardReference } from '../components/cards';
+	import { GET_REFERENCES_QUERY } from '../graphql/queries';
 
 	/**
 	 * @type {any[]}
@@ -25,12 +26,9 @@
 				rows = data;
 			})
 			.catch((e) => console.log(e));
-		fetch('/references.json')
-			.then((results) => results.json())
-			.then((data) => {
-				references = data;
-			})
-			.catch((e) => console.log(e));
+		graphQLClient.request(GET_REFERENCES_QUERY).then(result => {
+			if (result.getReferences) references = result.getReferences
+		}).catch(error => console.log(error));
 	});
 </script>
 

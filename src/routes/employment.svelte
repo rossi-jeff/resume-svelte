@@ -1,8 +1,9 @@
 <script>
-	import { contentUrl, ContentUUID, breadcrumbs } from '../lib';
+	import { contentUrl, ContentUUID, breadcrumbs, graphQLClient } from '../lib';
 	import { onMount } from 'svelte';
 	import { ContentRender } from '../components';
 	import { CardJob } from '../components/cards';
+	import { GET_JOBS_QUERY } from '../graphql/queries';
 
 	/**
 	 * @type {any[]}
@@ -25,12 +26,11 @@
 				rows = data;
 			})
 			.catch((e) => console.log(e));
-		fetch('/employment.json')
-			.then((results) => results.json())
-			.then((data) => {
-				jobs = data;
-			})
-			.catch((e) => console.log(e));
+		graphQLClient.request(GET_JOBS_QUERY).then(result => {
+			if (result.getJobs) jobs = result.getJobs
+		}).catch(error => {
+			console.log(error);
+		})
 	});
 </script>
 

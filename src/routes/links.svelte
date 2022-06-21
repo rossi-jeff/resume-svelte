@@ -1,7 +1,8 @@
 <script>
-	import { contentUrl, ContentUUID, breadcrumbs } from '../lib';
+	import { contentUrl, ContentUUID, breadcrumbs, graphQLClient } from '../lib';
 	import { onMount } from 'svelte';
 	import { ContentRender, TableLinks } from '../components';
+	import { GET_LINKS_QUERY } from '../graphql/queries';
 
 	/**
 	 * @type {any[]}
@@ -24,12 +25,9 @@
 				rows = data;
 			})
 			.catch((e) => console.log(e));
-		fetch('/links.json')
-			.then((results) => results.json())
-			.then((data) => {
-				links = data;
-			})
-			.catch((e) => console.log(e));
+		graphQLClient.request(GET_LINKS_QUERY).then(result => {
+			if (result.getLinks) links = result.getLinks
+		}).catch(error => console.log(error));
 	});
 </script>
 
