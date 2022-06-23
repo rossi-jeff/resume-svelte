@@ -23,4 +23,8 @@
 	});
 </script>
 
+<svelte:head>
+	<title>Jeff Rossi | Software Developer</title>
+</svelte:head>
+
 <ContentRender {rows} />

@@ -31,6 +31,10 @@
 	});
 </script>
 
+<svelte:head>
+	<title>Jeff Rossi | Software Developer > Links</title>
+</svelte:head>
+
 <ContentRender {rows} />
 
 <TableLinks {links} />

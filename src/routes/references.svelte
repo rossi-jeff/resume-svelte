@@ -32,6 +32,10 @@
 	});
 </script>
 
+<svelte:head>
+	<title>Jeff Rossi | Software Developer > References</title>
+</svelte:head>
+
 <ContentRender {rows} />
 
 {#each references as reference (reference.Id)}

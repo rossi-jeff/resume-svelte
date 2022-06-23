@@ -34,6 +34,10 @@
 	});
 </script>
 
+<svelte:head>
+	<title>Jeff Rossi | Software Developer > Education</title>
+</svelte:head>
+
 <ContentRender {rows} />
 
 {#each schools as school}

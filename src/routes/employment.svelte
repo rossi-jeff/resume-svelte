@@ -34,6 +34,10 @@
 	});
 </script>
 
+<svelte:head>
+	<title>Jeff Rossi | Software Developer > Employment</title>
+</svelte:head>
+
 <ContentRender {rows} />
 
 {#each jobs as job (job.Id)}

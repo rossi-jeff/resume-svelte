@@ -54,6 +54,10 @@
 	});
 </script>
 
+<svelte:head>
+	<title>Jeff Rossi | Software Developer > Contact</title>
+</svelte:head>
+
 <ContentRender {rows} />
 
 <div class="card-normal shadow">

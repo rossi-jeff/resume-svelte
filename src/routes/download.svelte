@@ -71,6 +71,10 @@
 	});
 </script>
 
+<svelte:head>
+	<title>Jeff Rossi | Software Developer > Resume</title>
+</svelte:head>
+
 <ContentRender {rows} />
 
 <div class="card-normal shadow">

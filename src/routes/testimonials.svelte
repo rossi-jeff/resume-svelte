@@ -32,6 +32,10 @@
 	});
 </script>
 
+<svelte:head>
+	<title>Jeff Rossi | Software Developer > Testimonials</title>
+</svelte:head>
+
 <ContentRender {rows} />
 
 {#each testimonials as testimonial (testimonial.Id)}
