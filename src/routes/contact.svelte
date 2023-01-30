@@ -1,5 +1,5 @@
 <script>
-	import { contentUrl, ContentUUID, graphQLClient, breadcrumbs } from '../lib';
+	import { contentUrl, ContentUUID, graphQLClient, breadcrumbs, RemoveBlanks } from '../lib';
 	import { onMount } from 'svelte';
 	import { ContentRender } from '../components';
 	import { FormName, FormAddress, FormMessage, FormContactMethods } from '../components/forms';
@@ -10,7 +10,7 @@
 	 */
 	let rows = [];
 
-	let contact = {
+	let blank = {
 		Name: {
 			Salutation: '',
 			First: '',
@@ -33,14 +33,16 @@
 		Subject: '',
 		Message: ''
 	};
+	let contact = JSON.parse(JSON.stringify(blank));
 
 	/** @type {{ text: string; href?: string; }[]} */
 	let trail = [{ text: 'Home', href: '/' }, { text: 'Contact' }];
 	breadcrumbs.set(trail);
 
 	const sendContact = async () => {
-		const data = await graphQLClient.request(CREATE_CONTACT_MUTATION, contact);
+		const data = await graphQLClient.request(CREATE_CONTACT_MUTATION, RemoveBlanks(contact));
 		console.log(JSON.stringify(data));
+		contact = JSON.parse(JSON.stringify(blank));
 	};
 
 	onMount(() => {

@@ -5,3 +5,4 @@ export { FormatName } from './format-name';
 export { graphQLClient } from './graphql-client';
 export { graphQLUrl } from './graphql-url';
 export { breadcrumbs } from './stores';
+export { RemoveBlanks } from './remove-blanks';
